@@ -93,7 +93,7 @@ export default function Sala() {
     const unsubscribe = onValue(salaRef, (snapshot) => {
       const data = snapshot.val();
       setSala(data);
-      setRondaTerminada(data?.rondaTerminada || false); // ✅ Actualiza estado local
+      setRondaTerminada(data?.rondaTerminada || false); // Actualiza estado local
     });
     return () => unsubscribe();
   }, [id]);
@@ -132,15 +132,23 @@ export default function Sala() {
 
   //Enviar Puntuacion  
   async function enviarPuntuaciones() {
-    if (!jugadorId) return;
-    const puntuacionesRef = ref(database, `salas/${id}/puntuaciones/${jugadorId}`);
-    await set(puntuacionesRef, puntuacionesJugador);
+  if (!jugadorId) return;
+
+    // Guardar puntuaciones
+  const puntuacionesRef = ref(database, `salas/${id}/puntuaciones/${jugadorId}`);
+  await set(puntuacionesRef, puntuacionesJugador);
 
     // Acumular puntajes totales
-    await acumularPuntajes(id, jugadorId, puntuacionesJugador);
+  await acumularPuntajes(id, jugadorId, puntuacionesJugador);
 
-    alert("Puntuaciones enviadas y acumuladas");
+    // Marcar que la ronda terminó (si no se ha hecho aún)
+  const salaRef = ref(database, `salas/${id}`);
+  if (!sala?.rondaTerminada) {
+    await update(salaRef, { rondaTerminada: true });
   }
+
+  alert("Puntuaciones enviadas y acumuladas");
+}
 
   // Función para unirse a la sala
   async function unirseASala() {
@@ -204,7 +212,7 @@ export default function Sala() {
       await update(salaRef, { rondaTerminada: true });
     }
 
-    alert("Bastaaa!");
+    alert("¡ Basta !");
   }
 
   if (!sala) return <p>Cargando sala...</p>;
@@ -440,7 +448,7 @@ export default function Sala() {
             onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#357ABD")}
             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#4a90e2")}
           >
-            Enviar puntuaciones
+            ¡ Basta !
           </button>
         </div>
       )}
