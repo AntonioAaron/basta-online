@@ -105,7 +105,7 @@ export default function Sala() {
     // Si ya está activado, verificar si el tiempo se acabó
     if (sala.tiempoLimiteActivado && sala.tiempoLimiteInicio) {
       const tiempoPasado = Date.now() - sala.tiempoLimiteInicio;
-      const limite = 30000; // 30 segundos
+      const limite = 15000; // segundos
 
       if (tiempoPasado >= limite) {
         const jugadoresFaltantes = jugadoresIds.filter((jid) => !respuestasIds.includes(jid));
@@ -322,9 +322,19 @@ export default function Sala() {
       )}
 
       {!todosEnviaron && sala.tiempoLimiteActivado && sala.tiempoLimiteInicio && (
-        <p style={{ fontWeight: 600, marginTop: 20 }}>
-          Tienes {Math.max(0, 30 - Math.floor((Date.now() - sala.tiempoLimiteInicio) / 1000))} segundos para terminar
-        </p>
+        <div style={{
+          marginTop: 20,
+          padding: '10px 15px',
+          backgroundColor: '#fff3cd', 
+          color: '#856404',
+          border: '1px solid rgb(240, 186, 26)',
+          borderRadius: 4,
+          fontWeight: 600,
+          fontSize: '16px',
+          textAlign: 'center'
+        }}>
+          ⏳ ¡Apúrate! Tienes <strong>{Math.max(0, 15 - Math.floor((Date.now() - sala.tiempoLimiteInicio) / 1000))}</strong> segundos para terminar.
+        </div>
       )}
 
       {!todosEnviaron && sala.estado === "jugando" && sala.letraActual && (
