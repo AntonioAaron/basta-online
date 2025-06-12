@@ -305,7 +305,7 @@ export default function Sala() {
         </button>
       )}
 
-      {!todosEnviaron && sala.estado === "jugando" && sala.letraActual && (
+      {!sala.rondaTerminada && sala.estado === "jugando" && sala.letraActual && (
         <div style={{ marginTop: 30 }}>
           <h3 style={{ marginBottom: 15, color: "#4a90e2" }}>
             Completa las categorías con la letra: {sala.letraActual}
@@ -373,7 +373,7 @@ export default function Sala() {
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#357ABD")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#4a90e2")}
             >
-              Enviar respuestas
+              Enviar respuestas ¡ Basta !
             </button>
           </form>
         </div>
@@ -448,7 +448,7 @@ export default function Sala() {
             onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#357ABD")}
             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#4a90e2")}
           >
-            ¡ Basta !
+            Enviar puntajes
           </button>
         </div>
       )}
